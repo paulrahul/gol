@@ -87,7 +87,9 @@ const globeMaterial = new THREE.ShaderMaterial({
     varying vec2 vUv;
     void main() {
       float light = dot(normalize(vNormal), sunDir);
-      float blend = smoothstep(-0.15, 0.15, light);
+      // light is sin(sun elevation). Fully lit from sunrise (-0.83°, with refraction),
+      // fading to night through civil twilight (-6°), so low winter sun still reads as day.
+      float blend = smoothstep(-0.105, -0.015, light);
       vec3 day = texture2D(dayTexture, vUv).rgb * (0.75 + 0.25 * max(light, 0.0));
       vec3 night = texture2D(nightTexture, vUv).rgb;
       gl_FragColor = vec4(mix(night, day, blend), opacity);
