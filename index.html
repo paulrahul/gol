@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Gol — dig straight through the Earth</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://esm.sh/three@0.186.1",
+          "globe.gl": "https://esm.sh/globe.gl@2.46.2?deps=three@0.186.1"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="globe"></div>
+    <div id="flash" aria-hidden="true"></div>
+
+    <form id="search" autocomplete="off">
+      <input id="search-input" type="search" placeholder="Search a place or address" aria-label="Search a place or address" />
+      <p id="search-status" role="status"></p>
+      <ul id="search-results" hidden></ul>
+    </form>
+
+    <button id="layers-btn" type="button" aria-expanded="false" aria-controls="layers">Layers</button>
+
+    <div id="mobile-note" role="note" hidden>
+      <p>Gol is designed for larger screens. On a phone, some views may be cramped or slow.</p>
+      <button id="mobile-note-ok" type="button" class="ghost">OK</button>
+    </div>
+
+    <div id="pair-bar" hidden>
+      <span id="pair-text"></span>
+      <button id="pair-dig" type="button" class="primary">Dig here</button>
+      <button id="pair-close" type="button" class="ghost" aria-label="Close">×</button>
+    </div>
+
+    <aside id="layers">
+      <div class="switch-row">
+        <label class="switch">
+          <input type="checkbox" id="toggle-mirror" />
+          <span>Mirror world</span>
+        </label>
+        <button type="button" class="info" aria-label="About Mirror world" aria-describedby="tip-mirror">i</button>
+        <p class="tip" role="tooltip" id="tip-mirror">
+          Shows every continent moved to the exact opposite side of the Earth. Where a blue outline
+          overlaps real land, digging straight down from there would bring you out on land. Light
+          dots mark those spots.
+        </p>
+      </div>
+      <p id="mirror-note" hidden></p>
+      <div id="mirror-pairs" hidden></div>
+      <div class="switch-row">
+        <label class="switch">
+          <input type="checkbox" id="toggle-lines" />
+          <span>Same latitude and longitude</span>
+        </label>
+        <button type="button" class="info" aria-label="About same latitude and longitude" aria-describedby="tip-lines">i</button>
+        <p class="tip" role="tooltip" id="tip-lines">
+          Draws the east–west line (latitude) and the north–south line (longitude) through your pin,
+          and lists major cities on each. Places on the same latitude get similar day lengths. The
+          longitude line also runs through your exit point on the far side.
+        </p>
+      </div>
+      <p id="clock-layers"></p>
+    </aside>
+
+    <aside id="panel" aria-live="polite">
+      <button id="sheet-handle" type="button" aria-label="Show more" aria-expanded="true"></button>
+      <div id="panel-body"></div>
+    </aside>
+
+    <div id="hud" hidden>
+      <p id="stage" role="status"></p>
+
+      <div id="gauge" aria-hidden="true">
+        <span class="end">Start</span>
+        <div id="gauge-bands">
+          <div id="gauge-marker"></div>
+        </div>
+        <span class="end">Exit</span>
+      </div>
+
+      <dl id="readouts">
+        <div><dt>Layer</dt><dd data-key="layer">Crust</dd></div>
+        <div><dt>Depth</dt><dd data-key="depth">0 km</dd></div>
+        <div><dt>Temperature</dt><dd data-key="temp">15 °C</dd></div>
+        <div><dt>Speed</dt><dd data-key="speed">0.00 km/s</dd></div>
+        <div><dt>Trip time</dt><dd data-key="time">0:00</dd></div>
+        <div><dt>Distance</dt><dd data-key="dist">0 km</dd></div>
+        <p class="note">Speed and trip time assume a frictionless fall through a uniform Earth.</p>
+      </dl>
+
+      <button id="skip" type="button" hidden>Skip</button>
+    </div>
+
+    <p id="clock"></p>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
