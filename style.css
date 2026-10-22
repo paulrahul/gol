@@ -630,6 +630,35 @@ button {
   white-space: nowrap;
 }
 
+.footnote {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.footnote a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 2px;
+}
+
+.footnote a:hover {
+  color: var(--accent);
+}
+
+#footnote {
+  position: fixed;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.footnote-layers {
+  display: none;
+}
+
 /* Phone-only notice */
 
 #mobile-note {
@@ -756,6 +785,15 @@ body.digging #mobile-note {
 
   #clock {
     display: none;
+  }
+
+  #footnote {
+    display: none;
+  }
+
+  .footnote-layers {
+    display: block;
+    margin-top: 4px;
   }
 
   #clock-layers {
